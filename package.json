@@ -1,0 +1,44 @@
+{
+  "name": "plutus-site",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc -b && vite build",
+    "preview": "vite preview",
+    "format": "biome format --write .",
+    "format:check": "biome format .",
+    "lint": "biome lint .",
+    "typecheck": "tsc -b",
+    "test": "playwright test",
+    "test:smoke": "playwright test",
+    "verifier": "node scripts/verifier-publication.mjs",
+    "verifier:depot": "node scripts/verifier-depot.mjs",
+    "verifier:version": "node scripts/verifier-version.mjs",
+    "controle": "node scripts/captures-controle.mjs"
+  },
+  "dependencies": {
+    "@fontsource-variable/fraunces": "^5.2.9",
+    "@fontsource-variable/inter": "^5.2.8",
+    "clsx": "^2.1.1",
+    "lucide-react": "^0.525.0",
+    "react": "^19.1.0",
+    "react-dom": "^19.1.0",
+    "tailwind-merge": "^3.3.1"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "^2.5.4",
+    "@playwright/test": "^1.61.1",
+    "@tailwindcss/typography": "^0.5.16",
+    "@tailwindcss/vite": "^4.1.11",
+    "@types/node": "^26.1.1",
+    "@types/react": "^19.1.8",
+    "@types/react-dom": "^19.1.6",
+    "@vitejs/plugin-react": "^4.6.0",
+    "playwright-core": "^1.61.1",
+    "tailwindcss": "^4.1.11",
+    "typescript": "~5.8.3",
+    "vite": "^7.0.0"
+  }
+}

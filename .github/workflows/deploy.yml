@@ -1,0 +1,95 @@
+# Déploiement GitHub Pages : uniquement après TOUTES les vérifications.
+# Déclenché par : push sur main, ou à la main.
+#
+# Il n'y a plus de cron : la version affichée n'est plus figée au build — la
+# page de téléchargement lit version.json du dépôt de releases directement
+# dans le navigateur, donc une nouvelle release est visible immédiatement
+# sans redéploiement.
+#
+# Publication BLOQUÉE si la chaîne de téléchargement (version.json valide +
+# installeur joignable) ne peut pas être vérifiée : on ne publie pas un site
+# dont la page de téléchargement n'a pas été contrôlée.
+name: Déploiement GitHub Pages
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch: {}
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    name: Vérifications & build
+    runs-on: ubuntu-latest
+    env:
+      # Variable de dépôt SITE_BASE : « / » quand le domaine dédié sera actif
+      # (avec public/CNAME) ; « /plutus-site/ » par défaut pour l'aperçu Pages.
+      SITE_BASE: ${{ vars.SITE_BASE || '/plutus-site/' }}
+    steps:
+      - name: Récupérer le code
+        uses: actions/checkout@v7
+
+      - name: Installer Node
+        uses: actions/setup-node@v5
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Installer les dépendances
+        run: npm ci
+
+      - name: Formatage, lint, types
+        run: |
+          npm run format:check
+          npm run lint
+          npm run typecheck
+
+      - name: Scan du dépôt (docs internes, versions codées en dur, données personnelles dupliquées)
+        run: npm run verifier:depot
+
+      - name: Installer Chromium
+        run: npx playwright install --with-deps chromium
+
+      # Les tests construisent leur propre dist/ avec la base « / » (locale au
+      # test) ; le build de production est refait juste après avec SITE_BASE.
+      - name: Tests de navigation
+        run: npm test
+        env:
+          SITE_BASE: /
+
+      - name: Build de production
+        run: npm run build
+
+      - name: Scan de publication de dist/
+        run: npm run verifier
+
+      - name: Chaîne de téléchargement — BLOQUANT (version.json valide + installeur joignable)
+        run: npm run verifier:version
+
+      - name: Configurer Pages
+        uses: actions/configure-pages@v5
+
+      - name: Téléverser le site
+        uses: actions/upload-pages-artifact@v4
+        with:
+          path: dist
+
+  deploy:
+    name: Publier
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Déployer sur GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

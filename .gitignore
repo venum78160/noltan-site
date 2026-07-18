@@ -1,0 +1,16 @@
+node_modules/
+dist/
+*.local
+tsconfig.tsbuildinfo
+
+# Captures de contrôle visuel — usage interne uniquement, jamais versionnées
+# (npm run controle en local, ou artefact du workflow « Contrôle visuel »)
+controle-visuel/
+
+# Pipeline interne de régénération des captures produit (vit dans le dépôt
+# privé ; copié ici temporairement le temps d'une régénération)
+scripts/captures-produit/
+
+# Sorties Playwright
+test-results/
+playwright-report/

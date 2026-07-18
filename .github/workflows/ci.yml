@@ -1,0 +1,84 @@
+# CI du site : sur chaque PR et chaque push main —
+# installation reproductible, formatage, lint, types, build, scans de
+# publication (dist/ ET dépôt), audit des dépendances, chaîne de
+# téléchargement (version.json + installeur), tests de navigation.
+name: CI site
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+  workflow_dispatch: {}
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  verifier:
+    name: Vérifications & build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Récupérer le code
+        uses: actions/checkout@v7
+
+      - name: Installer Node
+        uses: actions/setup-node@v5
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Installer les dépendances (reproductible)
+        run: npm ci
+
+      - name: Formatage (Biome)
+        run: npm run format:check
+
+      - name: Lint (Biome)
+        run: npm run lint
+
+      - name: Types (TypeScript)
+        run: npm run typecheck
+
+      - name: Scan du dépôt (docs internes, versions codées en dur, données personnelles dupliquées)
+        run: npm run verifier:depot
+
+      - name: Build de production
+        run: npm run build
+
+      - name: Scan de publication de dist/ (secrets, chemins locaux, marques internes)
+        run: npm run verifier
+
+      - name: Audit des dépendances de production
+        run: npm audit --omit=dev --audit-level=high
+
+      # Chaîne de téléchargement réelle : version.json valide + installeur
+      # joignable. Tolérant sur PR (un aléa réseau ne bloque pas une relecture),
+      # BLOQUANT sur main — et de toute façon bloquant au déploiement.
+      - name: Chaîne de téléchargement (version.json + installeur)
+        run: node scripts/verifier-version.mjs ${{ github.event_name == 'pull_request' && '--tolerant' || '' }}
+
+  tests:
+    name: Tests de navigation (Playwright)
+    runs-on: ubuntu-latest
+    steps:
+      - name: Récupérer le code
+        uses: actions/checkout@v7
+
+      - name: Installer Node
+        uses: actions/setup-node@v5
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Installer les dépendances
+        run: npm ci
+
+      - name: Installer Chromium
+        run: npx playwright install --with-deps chromium
+
+      - name: Tests de navigation (accueil, démo, téléchargement, légal, 404, menu mobile, débordement, version.json)
+        run: npm test
