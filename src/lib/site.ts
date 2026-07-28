@@ -44,7 +44,7 @@ export const SITE = {
   accompagnementTexte:
     "Un assistant de bienvenue configure le cabinet pas à pas à la première " +
     "ouverture, et la démonstration se fait en direct, sur l'outil réel — " +
-    "vos questions trouvent des réponses avant même d'installer.",
+    "vos questions trouvent des réponses avant même d'installer l'application.",
 
   /* ——— Mentions légales (champs vides = ligne non affichée sur le site) ——— */
   formeJuridique: "entrepreneur individuel",

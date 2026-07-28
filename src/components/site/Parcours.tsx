@@ -38,7 +38,7 @@ const etapes: Etape[] = [
     ecran: "Fiche rendez-vous — notes et décisions",
   },
   {
-    titre: "Les documents partent du dossier",
+    titre: "Les documents se remplissent depuis le dossier",
     resume: "Vos modèles remplis automatiquement, avec contrôles avant génération.",
     detail:
       "Lettre de mission, déclarations d'adéquation : les champs se remplissent depuis le dossier — ici, 21 champs chargés d'un coup — et les contrôles signalent ce qui manque avant de générer. « Prêt » veut dire prêt.",

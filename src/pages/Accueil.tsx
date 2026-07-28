@@ -25,7 +25,7 @@ const irritants = [
       "L'extranet, un tableur, la boîte mail, des dossiers Windows — et aucune vue d'ensemble.",
   },
   {
-    titre: "Chaque document repart d'un modèle Word rempli à la main",
+    titre: "Chaque document est recréé à la main depuis un modèle Word",
     texte: "Les mêmes noms, les mêmes montants, recopiés pour la troisième fois de la semaine.",
   },
   {
@@ -111,8 +111,8 @@ const usages: Usage[] = [
 ];
 
 const cePlutusNestPas = [
-  "Un CRM généraliste qu'il faudrait d'abord adapter longuement au métier",
-  "Une GED de plus qui empile des fichiers sans les relier",
+  "Un CRM généraliste qu'il faudrait au préalable adapter longuement au métier",
+  "Une GED (gestion électronique de documents) de plus qui empile des fichiers sans les relier",
   "Une collection de modèles de documents vendue comme une plateforme",
   "Une intelligence artificielle qui déciderait à la place du conseiller",
 ];
@@ -347,8 +347,8 @@ const Accueil: React.FC = () => (
             <h3 className="text-xl font-semibold tracking-tight text-ink-900">Ce qu'il est</h3>
             <p className="mt-3 text-[15px] leading-relaxed text-ink-700">
               Un fil continu entre les informations, les rendez-vous, les documents, les actions et
-              le suivi — pensé depuis le premier jour pour la façon dont travaille réellement un
-              cabinet de gestion de patrimoine.
+              le suivi — conçu dès le premier jour en fonction des spécificités métier des cabinets
+              de gestion de patrimoine.
             </p>
             <ul className="mt-6 space-y-3">
               {[
@@ -386,9 +386,10 @@ const Accueil: React.FC = () => (
             Les données de vos clients méritent mieux qu'un cloud opaque
           </h2>
           <p className="mt-4 text-pretty text-base leading-relaxed text-ink-400">
-            Vos dossiers sont enregistrés sur votre poste : l'éditeur n'exploite aucun serveur qui
-            les reçoive. Seuls les services que vous activez — votre compte Google, vos extranets —
-            reçoivent les informations nécessaires à leur fonctionnement.
+            Vos dossiers sont enregistrés sur votre poste, et n'en partent pas : il n'existe aucun
+            serveur Plutus où ils seraient envoyés. Seuls les services que vous activez — votre
+            compte Google, vos extranets — reçoivent les informations nécessaires à leur
+            fonctionnement.
           </p>
         </div>
 
@@ -413,9 +414,9 @@ const Accueil: React.FC = () => (
                 Agenda <span className="font-normal text-ink-400">(calendar.events)</span>
               </p>
               <p className="mt-1.5 text-sm leading-relaxed text-ink-400">
-                Créer, modifier et supprimer <em>uniquement</em> les événements des rendez-vous que
-                vous planifiez dans Plutus, et afficher votre journée pour éviter les conflits
-                d'horaires.
+                Créer, modifier et supprimer <em>uniquement</em> les événements planifiés depuis
+                Plutus. Afficher votre planning de la journée pour empêcher tout chevauchement de
+                créneaux.
               </p>
             </div>
             <div>
@@ -443,7 +444,7 @@ const Accueil: React.FC = () => (
     <section className="bg-white py-24">
       <div className="reveal mx-auto max-w-2xl px-6 text-center">
         <h2 className="text-balance text-3xl font-semibold tracking-tight text-ink-900 sm:text-4xl">
-          Voyez Plutus sur un <span className="accent-serif">vrai</span> dossier
+          Découvrez Plutus sur un <span className="accent-serif">vrai</span> dossier
         </h2>
         <p className="mt-5 text-pretty text-base leading-relaxed text-ink-500">
           La démonstration se fait en visio, sur un cas concret proche de votre pratique : de
