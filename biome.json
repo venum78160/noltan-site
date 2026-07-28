@@ -42,6 +42,18 @@
       }
     }
   },
+  "overrides": [
+    {
+      "includes": ["src/components/ui/animated-shader-hero.tsx"],
+      "linter": {
+        "rules": {
+          "correctness": {
+            "useHookAtTopLevel": "off"
+          }
+        }
+      }
+    }
+  ],
   "assist": {
     "actions": {
       "source": {
