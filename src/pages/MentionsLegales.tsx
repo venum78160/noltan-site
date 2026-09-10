@@ -23,7 +23,7 @@ const MentionsLegales: React.FC = () => (
       <div className="prose prose-slate mx-auto max-w-3xl px-6 prose-headings:font-semibold prose-headings:tracking-tight prose-a:text-gold-700 prose-strong:text-ink-900">
         <h2>Éditeur du site</h2>
         <p>
-          Le site {SITE.url} et l'application Plutus sont édités par <strong>{SITE.editeur}</strong>
+          Le site {SITE.url} et l'application Noltan sont édités par <strong>{SITE.editeur}</strong>
           {SITE.formeJuridique && <>, {SITE.formeJuridique}</>}
           {SITE.siren && <> — SIREN {SITE.siren}</>}
           {SITE.tvaIntra && <> — TVA intracommunautaire {SITE.tvaIntra}</>}.
@@ -52,7 +52,7 @@ const MentionsLegales: React.FC = () => (
 
         <h2>Propriété intellectuelle</h2>
         <p>
-          L'ensemble des contenus de ce site (textes, visuels, logo, application Plutus) est protégé
+          L'ensemble des contenus de ce site (textes, visuels, logo, application Noltan) est protégé
           par le droit de la propriété intellectuelle. Toute reproduction non autorisée est
           interdite. Les captures d'écran présentées sur ce site montrent l'application remplie d'un
           jeu de démonstration entièrement fictif : toute ressemblance avec des personnes ou

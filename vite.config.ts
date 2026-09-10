@@ -12,13 +12,13 @@ const r = (p: string) => fileURLToPath(new URL(p, import.meta.url));
  * après chaque release, sans redéploiement du site.
  */
 export default defineConfig(() => {
-  // "/" par défaut (domaine dédié) ; "/plutus-site/" pour l'aperçu GitHub Pages.
+  // "/" par défaut (domaine dédié) ; "/noltan-site/" pour l'aperçu GitHub Pages.
   const base = process.env.SITE_BASE || "/";
 
   /** Remplace __BASE__ dans les HTML et ajoute noindex sur l'aperçu Pages
       (le référencement attendra le vrai domaine). */
   const metaEtBase: Plugin = {
-    name: "plutus-meta-base",
+    name: "noltan-meta-base",
     transformIndexHtml(html) {
       let sortie = html.replaceAll("__BASE__", base);
       if (base !== "/") {

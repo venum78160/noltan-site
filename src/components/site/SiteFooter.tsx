@@ -64,7 +64,7 @@ export const SiteFooter: React.FC = () => (
 
       <div className="mt-12 flex flex-col gap-2 border-t border-ink-200 pt-6 text-[13px] text-ink-500 sm:flex-row sm:items-center sm:justify-between">
         <p>
-          © {new Date().getFullYear()} {SITE.editeur} — Plutus. Tous droits réservés.
+          © {new Date().getFullYear()} {SITE.editeur} — Noltan. Tous droits réservés.
         </p>
         <p>
           Application de bureau pour Windows. Aucune donnée client ne transite par nos serveurs.

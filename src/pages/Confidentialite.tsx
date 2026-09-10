@@ -18,20 +18,20 @@ const Confidentialite: React.FC = () => (
       <div className="prose prose-slate mx-auto max-w-3xl px-6 prose-headings:font-semibold prose-headings:tracking-tight prose-a:text-gold-700 prose-strong:text-ink-900">
         <p>
           Cette politique décrit les données traitées par l'application de bureau{" "}
-          <strong>Plutus</strong> et par le présent site ({SITE.url}), édités par {SITE.editeur}.
+          <strong>Noltan</strong> et par le présent site ({SITE.url}), édités par {SITE.editeur}.
           Elle s'adresse aux professionnels du conseil en gestion de patrimoine qui utilisent
           l'application.
         </p>
 
         <h2>1. Le principe : une application locale</h2>
         <p>
-          Plutus est un logiciel installé sur l'ordinateur de l'utilisateur. Il ne s'appuie sur{" "}
+          Noltan est un logiciel installé sur l'ordinateur de l'utilisateur. Il ne s'appuie sur{" "}
           <strong>aucun serveur de l'éditeur</strong> : les dossiers clients, documents générés,
           comptes rendus, paramètres et historiques sont stockés exclusivement sur le poste de
           l'utilisateur, dans des dossiers qu'il maîtrise.
         </p>
         <ul>
-          <li>L'éditeur de Plutus n'a accès à aucune donnée saisie dans l'application.</li>
+          <li>L'éditeur de Noltan n'a accès à aucune donnée saisie dans l'application.</li>
           <li>
             Aucune donnée n'est collectée, transmise, revendue ou utilisée à des fins publicitaires.
           </li>
@@ -52,7 +52,7 @@ const Confidentialite: React.FC = () => (
 
         <h2>2. Données Google (connexion facultative)</h2>
         <p>
-          Plutus propose une connexion facultative au compte Google de l'utilisateur, via le
+          Noltan propose une connexion facultative au compte Google de l'utilisateur, via le
           protocole OAuth 2.0 de Google, afin de rendre deux services précis. L'utilisateur peut
           refuser cette connexion : l'application fonctionne sans.
         </p>
@@ -60,17 +60,17 @@ const Confidentialite: React.FC = () => (
         <h3>2.1 Accès demandés et usage exact</h3>
         <ul>
           <li>
-            <strong>Agenda</strong> (portée <code>calendar.events</code>) : Plutus crée, modifie et
+            <strong>Agenda</strong> (portée <code>calendar.events</code>) : Noltan crée, modifie et
             supprime uniquement les événements correspondant aux rendez-vous planifiés dans
             l'application (titre, date, lien de visioconférence, invitation du client), et lit les
             événements du jour pour afficher un aperçu de la journée et éviter les conflits
             d'horaires.
           </li>
           <li>
-            <strong>Envoi d'e-mails</strong> (portée <code>gmail.send</code>) : Plutus envoie, à la
+            <strong>Envoi d'e-mails</strong> (portée <code>gmail.send</code>) : Noltan envoie, à la
             demande explicite de l'utilisateur (clic sur un bouton d'envoi), des e-mails rédigés
             dans l'application — typiquement le compte rendu d'un rendez-vous — depuis l'adresse de
-            l'utilisateur. <strong>Plutus ne lit jamais la boîte de réception</strong>, n'accède à
+            l'utilisateur. <strong>Noltan ne lit jamais la boîte de réception</strong>, n'accède à
             aucun e-mail reçu et n'envoie aucun message sans action de l'utilisateur.
           </li>
         </ul>
@@ -98,7 +98,7 @@ const Confidentialite: React.FC = () => (
 
         <h3>2.3 Engagement « Limited Use »</h3>
         <p>
-          L'utilisation par Plutus des informations reçues des API Google est conforme aux{" "}
+          L'utilisation par Noltan des informations reçues des API Google est conforme aux{" "}
           <a
             href="https://developers.google.com/terms/api-services-user-data-policy"
             target="_blank"
@@ -110,7 +110,7 @@ const Confidentialite: React.FC = () => (
         </p>
 
         <h3>2.4 Révocation</h3>
-        <p>L'utilisateur peut couper l'accès de Plutus à son compte Google à tout moment :</p>
+        <p>L'utilisateur peut couper l'accès de Noltan à son compte Google à tout moment :</p>
         <ul>
           <li>depuis les réglages de l'application (bouton « Déconnecter le compte Google ») ;</li>
           <li>

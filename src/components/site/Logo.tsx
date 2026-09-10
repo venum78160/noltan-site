@@ -2,10 +2,10 @@ import type React from "react";
 import { cn, lien } from "@/lib/utils";
 
 /**
- * Logo Plutus : reprise du motif de l'icône réelle de l'application
+ * Logo Noltan : reprise du motif de l'icône réelle de l'application
  * (assets/icone.png) — document crème à coin plié or sur carré d'encre.
  */
-export const MarquePlutus: React.FC<{ taille?: number; className?: string }> = ({
+export const MarqueNoltan: React.FC<{ taille?: number; className?: string }> = ({
   taille = 28,
   className,
 }) => (
@@ -51,9 +51,9 @@ export const Logo: React.FC<{ dark?: boolean; className?: string }> = ({
         : "text-ink-900 focus-visible:outline-ink-900",
       className,
     )}
-    aria-label="Plutus — retour à l'accueil"
+    aria-label="Noltan — retour à l'accueil"
   >
-    <MarquePlutus />
-    <span className="text-[17px] font-semibold tracking-tight">Plutus</span>
+    <MarqueNoltan />
+    <span className="text-[17px] font-semibold tracking-tight">Noltan</span>
   </a>
 );

@@ -31,7 +31,7 @@ const etapesInstallation = [
       "Double-cliquez sur le fichier téléchargé et laissez-vous guider : l'installation prend moins d'une minute.",
   },
   {
-    titre: "Ouvrez Plutus",
+    titre: "Ouvrez Noltan",
     texte:
       "Un raccourci est créé sur votre bureau. Au premier lancement, l'assistant de bienvenue configure le cabinet pas à pas.",
   },
@@ -69,7 +69,7 @@ const Telechargement: React.FC = () => {
             Téléchargement
           </p>
           <h1 className="mt-3 text-balance text-3xl font-semibold tracking-tight text-ink-900 sm:text-5xl">
-            Installez Plutus sur votre poste
+            Installez Noltan sur votre poste
           </h1>
           <p className="mx-auto mt-4 max-w-xl text-pretty text-base leading-relaxed text-ink-500">
             {etat.statut === "ok" ? `Version ${etat.infos.version} pour Windows.` : "Pour Windows."}{" "}
@@ -84,7 +84,7 @@ const Telechargement: React.FC = () => {
                   className="inline-flex h-12 cursor-progress items-center justify-center gap-2 rounded-full bg-ink-900/60 px-7 text-[15px] font-semibold text-white"
                 >
                   <Download size={17} strokeWidth={2.25} aria-hidden="true" />
-                  Télécharger Plutus pour Windows
+                  Télécharger Noltan pour Windows
                 </span>
                 <p className="text-[13px] text-ink-500">Vérification de la dernière version…</p>
               </>
@@ -94,7 +94,7 @@ const Telechargement: React.FC = () => {
               <>
                 <ButtonLink href={etat.infos.urlExe} size="lg" download>
                   <Download size={17} strokeWidth={2.25} aria-hidden="true" />
-                  {`Télécharger Plutus ${etat.infos.version} pour Windows`}
+                  {`Télécharger Noltan ${etat.infos.version} pour Windows`}
                 </ButtonLink>
                 <p className="text-[13px] text-ink-500">Fichier .exe · {SITE.poidsInstalleur}</p>
                 {etat.infos.notes && (
@@ -126,7 +126,7 @@ const Telechargement: React.FC = () => {
             )}
 
             <p className="text-sm text-ink-500">
-              Vous découvrez Plutus ?{" "}
+              Vous découvrez Noltan ?{" "}
               <a
                 href={lien("/demo/")}
                 className="cursor-pointer font-medium text-gold-700 hover:underline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ink-900"

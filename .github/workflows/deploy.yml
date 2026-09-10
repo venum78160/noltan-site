@@ -30,9 +30,10 @@ jobs:
     name: Vérifications & build
     runs-on: ubuntu-latest
     env:
-      # Variable de dépôt SITE_BASE : « / » quand le domaine dédié sera actif
-      # (avec public/CNAME) ; « /plutus-site/ » par défaut pour l'aperçu Pages.
-      SITE_BASE: ${{ vars.SITE_BASE || '/plutus-site/' }}
+      # Variable de dépôt SITE_BASE : « / » quand le domaine noltan.fr est actif
+      # (réglé dans Settings ▸ Pages, le fichier CNAME est ignoré en mode
+      # workflow) ; « /noltan-site/ » par défaut pour l'aperçu Pages.
+      SITE_BASE: ${{ vars.SITE_BASE || '/noltan-site/' }}
     steps:
       - name: Récupérer le code
         uses: actions/checkout@v7

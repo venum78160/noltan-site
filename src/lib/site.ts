@@ -4,10 +4,10 @@
  * Markdown du dépôt : ce qui est affiché sur le site vit dans ce fichier).
  */
 export const SITE = {
-  nom: "Plutus",
+  nom: "Noltan",
   tagline: "L'espace de travail du conseiller en gestion de patrimoine",
   /** URL publique du site (écran de consentement Google + balises canoniques). */
-  url: "https://plutus-app.fr",
+  url: "https://noltan.fr",
   /** Adresse de contact affichée sur le site et dans la politique de confidentialité. */
   emailContact: "valentin7892@gmail.com",
 
@@ -16,9 +16,9 @@ export const SITE = {
      récupéré PAR LE NAVIGATEUR sur la page de téléchargement (cf.
      src/lib/version.ts). Aucun numéro de version n'existe dans ce dépôt. */
   /** Emplacement public de version.json (numéro, url de release, url_exe, notes). */
-  urlVersionJson: "https://raw.githubusercontent.com/venum78160/Plutus/main/version.json",
+  urlVersionJson: "https://raw.githubusercontent.com/venum78160/Noltan/main/version.json",
   /** Page générale des releases — repli affiché quand version.json est indisponible. */
-  urlReleases: "https://github.com/venum78160/Plutus/releases/latest",
+  urlReleases: "https://github.com/venum78160/Noltan/releases/latest",
   /** Poids approximatif de l'installeur, affiché à côté du bouton. */
   poidsInstalleur: "≈ 40 Mo",
 
@@ -57,11 +57,11 @@ export const SITE = {
 
 /** E-mail pré-rempli de demande de démonstration (repli sans backend). */
 const MAILTO_DEMO = `mailto:${SITE.emailContact}?subject=${encodeURIComponent(
-  "Demande de démonstration Plutus",
+  "Demande de démonstration Noltan",
 )}&body=${encodeURIComponent(
   `Bonjour,
 
-Je souhaite découvrir Plutus lors d'une démonstration.
+Je souhaite découvrir Noltan lors d'une démonstration.
 
 Cabinet :
 Nombre de conseillers :

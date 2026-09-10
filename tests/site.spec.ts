@@ -8,9 +8,9 @@ import { expect, type Page, test } from "@playwright/test";
  */
 
 const pagesPrincipales = [
-  { chemin: "/", h1: /espace de travail|Plutus/i },
-  { chemin: "/demo/", h1: /Voir Plutus fonctionner/i },
-  { chemin: "/telechargement/", h1: /Installez Plutus/i },
+  { chemin: "/", h1: /espace de travail|Noltan/i },
+  { chemin: "/demo/", h1: /Voir Noltan fonctionner/i },
+  { chemin: "/telechargement/", h1: /Installez Noltan/i },
   { chemin: "/mentions-legales/", h1: /Mentions légales/i },
   { chemin: "/confidentialite/", h1: /confidentialité/i },
 ];
@@ -18,8 +18,8 @@ const pagesPrincipales = [
 /** version.json fictif servi aux tests (jamais le réseau réel). */
 const VERSION_FICTIVE = {
   version: "9.9.9",
-  url: "https://github.com/venum78160/Plutus/releases/tag/v9.9.9",
-  url_exe: "https://github.com/venum78160/Plutus/releases/download/v9.9.9/Plutus-Installation.exe",
+  url: "https://github.com/venum78160/Noltan/releases/tag/v9.9.9",
+  url_exe: "https://github.com/venum78160/Noltan/releases/download/v9.9.9/Noltan-Installation.exe",
   notes: "Notes de test.",
 };
 
@@ -94,7 +94,7 @@ test.describe("page de téléchargement — version.json", () => {
     await page.goto("/telechargement/");
     const bouton = page.locator(`a[href="${VERSION_FICTIVE.url_exe}"]`);
     await expect(bouton).toBeVisible();
-    await expect(bouton).toContainText(`Télécharger Plutus ${VERSION_FICTIVE.version}`);
+    await expect(bouton).toContainText(`Télécharger Noltan ${VERSION_FICTIVE.version}`);
     await expect(page.locator("h1 ~ p").first()).toContainText(VERSION_FICTIVE.version);
     await expect(page.getByText("Notes de test.")).toBeVisible();
     await expect(page.locator(`a[href="${VERSION_FICTIVE.url}"]`)).toBeVisible();
@@ -107,7 +107,7 @@ test.describe("page de téléchargement — version.json", () => {
     await page.goto("/telechargement/");
     await expect(page.getByText(/n'a pas abouti/)).toBeVisible();
     await expect(
-      page.locator('a[href="https://github.com/venum78160/Plutus/releases/latest"]'),
+      page.locator('a[href="https://github.com/venum78160/Noltan/releases/latest"]'),
     ).toBeVisible();
     await expect(page.locator("main")).not.toContainText(/Version \d+\.\d+\.\d+/);
   });

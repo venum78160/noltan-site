@@ -11,7 +11,7 @@ const deroulement = [
     icone: Video,
     titre: "En visio, sur l'outil réel",
     texte:
-      "Pas de diapositives : vous voyez Plutus fonctionner en direct, sur un dossier exemple proche de votre pratique.",
+      "Pas de diapositives : vous voyez Noltan fonctionner en direct, sur un dossier exemple proche de votre pratique.",
   },
   {
     icone: ListChecks,
@@ -23,7 +23,7 @@ const deroulement = [
     icone: MessagesSquare,
     titre: "Vos questions, vos cas particuliers",
     texte:
-      "Vos modèles de documents, vos extranets, votre organisation : on regarde ensemble comment Plutus s'adapte à votre cabinet.",
+      "Vos modèles de documents, vos extranets, votre organisation : on regarde ensemble comment Noltan s'adapte à votre cabinet.",
   },
 ];
 
@@ -41,7 +41,7 @@ const Demo: React.FC = () => (
           Démonstration
         </p>
         <h1 className="mt-3 text-balance text-3xl font-semibold tracking-tight text-ink-900 sm:text-5xl">
-          Voir Plutus fonctionner, avant de l'adopter
+          Voir Noltan fonctionner, avant de l'adopter
         </h1>
         <p className="mx-auto mt-4 max-w-xl text-pretty text-base leading-relaxed text-ink-500">
           Une démonstration personnalisée, en visio, guidée par l'éditeur de l'outil. Sans

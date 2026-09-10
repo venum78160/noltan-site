@@ -97,7 +97,7 @@ export const Capture: React.FC<CaptureProps> = ({
               sombre ? "text-ink-400" : "text-ink-500",
             )}
           >
-            Plutus — {ecran}
+            Noltan — {ecran}
           </span>
         </div>
 
@@ -120,7 +120,7 @@ export const Capture: React.FC<CaptureProps> = ({
           >
             <img
               src={lien(`/captures/${fichier}`)}
-              alt={`Capture d'écran de Plutus : ${ecran}`}
+              alt={`Capture d'écran de Noltan : ${ecran}`}
               loading={priorite ? "eager" : "lazy"}
               fetchPriority={priorite ? "high" : "auto"}
               style={{ transformOrigin: origine, transform: zoom ? "scale(1.75)" : undefined }}
@@ -222,7 +222,7 @@ export const Capture: React.FC<CaptureProps> = ({
           >
             <img
               src={lien(`/captures/${fichier}`)}
-              alt={`Capture d'écran de Plutus : ${ecran}`}
+              alt={`Capture d'écran de Noltan : ${ecran}`}
               className="max-h-[86svh] max-w-full rounded-lg shadow-2xl"
               onClick={(e) => e.stopPropagation()}
             />

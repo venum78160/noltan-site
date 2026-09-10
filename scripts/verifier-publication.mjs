@@ -20,7 +20,7 @@ const MOTIFS = [
   { re: /-----BEGIN [A-Z ]*PRIVATE KEY/, pourquoi: "clé privée" },
   { re: /sk-[A-Za-z0-9]{20,}/, pourquoi: "clé d'API" },
   { re: /C:\\Users\\/i, pourquoi: "chemin local Windows" },
-  { re: /plutus-sandbox/i, pourquoi: "référence au bac à sable" },
+  { re: /noltan-sandbox/i, pourquoi: "référence au bac à sable" },
   { re: /scratchpad/i, pourquoi: "référence au dossier temporaire de session" },
   { re: /localhost:\d+|127\.0\.0\.1/, pourquoi: "adresse de développement" },
   // Volontairement sensible à la casse : les placeholders internes sont en

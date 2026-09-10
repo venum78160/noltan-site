@@ -16,7 +16,7 @@
  * un repli honnête ; ce script garantit en plus qu'on ne PUBLIE jamais le site
  * sans avoir contrôlé la chaîne complète.
  */
-const URL_VERSION_JSON = "https://raw.githubusercontent.com/venum78160/Plutus/main/version.json";
+const URL_VERSION_JSON = "https://raw.githubusercontent.com/venum78160/Noltan/main/version.json";
 const tolerant = process.argv.includes("--tolerant");
 
 function echec(message) {
@@ -37,7 +37,10 @@ function urlSure(valeur) {
     return null;
   }
   if (u.protocol !== "https:" || u.hostname !== "github.com") return null;
-  if (!u.pathname.startsWith("/venum78160/Plutus/")) return null;
+  // « Plutus » : ancien nom du dépôt de releases (avant le 10/09/2026) — les
+  // releases publiées sous ce nom gardent leurs URL (GitHub redirige). À
+  // retirer après la première release publiée sous le nom Noltan.
+  if (!/^\/venum78160\/(Noltan|Plutus)\//.test(u.pathname)) return null;
   return u.href;
 }
 

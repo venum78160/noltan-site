@@ -44,7 +44,7 @@ const FICHIER_LEGAL = "src/lib/site.ts";
 const regles = [
   {
     nom: "numéro de version de l'application codé en dur",
-    re: /\b\d+\.\d+\.\d+\s*(pour Windows|de Plutus)|version\s*[:=]\s*["']\d+\.\d+\.\d+["']|\bv?2\.1\.\d+\b/,
+    re: /\b\d+\.\d+\.\d+\s*(pour Windows|de Noltan)|version\s*[:=]\s*["']\d+\.\d+\.\d+["']|\bv?2\.1\.\d+\b/,
     // Les tests simulent version.json avec un numéro fictif : autorisé.
     sauf: (f) => EXCLUS_VERSIONS.has(f) || f.startsWith("tests/"),
   },

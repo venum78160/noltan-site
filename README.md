@@ -1,13 +1,13 @@
-# Site vitrine Plutus
+# Site vitrine Noltan
 
-Site public de **Plutus**, l'espace de travail du conseiller en gestion de
+Site public de **Noltan**, l'espace de travail du conseiller en gestion de
 patrimoine. Site statique (Vite + React + TypeScript + Tailwind), déployé sur
 GitHub Pages.
 
 > **Rôle de ce dépôt** : uniquement le site public. Le code de l'application
 > n'est pas publié (il vit dans un dépôt privé, avec la documentation interne) ;
 > les releases publiques et `version.json` vivent dans
-> [`venum78160/Plutus`](https://github.com/venum78160/Plutus).
+> [`venum78160/Noltan`](https://github.com/venum78160/Noltan).
 
 ## Prérequis
 
@@ -41,7 +41,7 @@ npm run controle          # captures d'écran du site → controle-visuel/ (non 
 **Il n'y a AUCUN numéro de version dans ce dépôt, ni au build.**
 
 - Source de vérité unique :
-  [`version.json`](https://raw.githubusercontent.com/venum78160/Plutus/main/version.json)
+  [`version.json`](https://raw.githubusercontent.com/venum78160/Noltan/main/version.json)
   du dépôt public de releases, réécrit automatiquement à chaque publication de
   l'application.
 - La page de téléchargement le récupère **dans le navigateur** au chargement
@@ -72,7 +72,7 @@ Variable de build :
 
 | Variable | Défaut | Rôle |
 |---|---|---|
-| `SITE_BASE` | `/` | Chemin de base. `/plutus-site/` pour l'aperçu GitHub Pages (ajoute aussi `noindex`) ; `/` quand le domaine dédié sera actif. En CI : variable de dépôt `SITE_BASE`. |
+| `SITE_BASE` | `/` | Chemin de base. `/noltan-site/` pour l'aperçu GitHub Pages (ajoute aussi `noindex`) ; `/` quand le domaine dédié sera actif. En CI : variable de dépôt `SITE_BASE`. |
 
 ## Déploiement
 
@@ -82,17 +82,28 @@ build, scans de publication, contrôle de la chaîne de téléchargement
 invalide), tests de navigation, puis publication sur GitHub Pages — sur push
 `main` ou à la demande. Aucun secret n'est nécessaire.
 
-### Passage au domaine dédié (quand il sera acheté)
+### Passage au domaine dédié `noltan.fr` (acheté chez OVHcloud le 10/09/2026)
 
-1. Créer le fichier `public/CNAME` contenant le domaine (ex. `plutus-app.fr`).
-2. Régler la variable de dépôt `SITE_BASE` à `/` (Settings → Secrets and
-   variables → Actions → Variables).
-3. Chez le registrar : `CNAME www → venum78160.github.io` et, pour l'apex, les
-   4 enregistrements A de GitHub Pages (185.199.108.153 / .109. / .110. /
-   .111.) — GitHub redirige ensuite www ↔ apex selon le CNAME choisi et
-   fournit le HTTPS.
-4. Vérifier que les balises canoniques (`https://plutus-app.fr/...` dans les
-   HTML) correspondent bien au domaine retenu.
+Le site est publié par un workflow GitHub Actions : dans ce mode, GitHub
+**ignore tout fichier `CNAME`** du dépôt — le domaine se règle dans les
+paramètres du dépôt, pas dans le code.
+
+1. Chez OVHcloud (Web Cloud ▸ Noms de domaine ▸ noltan.fr ▸ Zone DNS) :
+   remplacer l'enregistrement `A` de l'apex par les 4 adresses de GitHub Pages
+   (185.199.108.153 / 185.199.109.153 / 185.199.110.153 / 185.199.111.153),
+   ajouter les 4 `AAAA` (2606:50c0:8000::153 / 8001::153 / 8002::153 /
+   8003::153) et faire pointer `www` en `CNAME` vers `venum78160.github.io.`.
+   Ne pas toucher aux `MX`/`TXT` si la boîte e-mail OVH est utilisée.
+2. Sur GitHub, Settings ▸ Pages ▸ « Custom domain » : `noltan.fr`, puis cocher
+   « Enforce HTTPS » une fois le certificat émis (quelques minutes à une
+   heure après la propagation DNS). Recommandé avant : vérifier le domaine au
+   niveau du compte (Settings du profil ▸ Pages ▸ « Add a domain », TXT
+   `_github-pages-challenge-venum78160`) pour interdire toute reprise.
+3. Régler la variable de dépôt `SITE_BASE` à `/` (Settings ▸ Secrets and
+   variables ▸ Actions ▸ Variables) et relancer le déploiement.
+4. Les balises canoniques et `SITE.url` (`src/lib/site.ts`) pointent déjà sur
+   `https://noltan.fr`. Mettre à jour ensuite l'écran de consentement Google
+   (domaine autorisé + URL de la politique de confidentialité).
 
 ## Licence
 

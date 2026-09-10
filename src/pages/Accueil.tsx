@@ -110,7 +110,7 @@ const usages: Usage[] = [
   },
 ];
 
-const cePlutusNestPas = [
+const ceNoltanNestPas = [
   "Un CRM généraliste qu'il faudrait au préalable adapter longuement au métier",
   "Une GED (gestion électronique de documents) de plus qui empile des fichiers sans les relier",
   "Une collection de modèles de documents vendue comme une plateforme",
@@ -122,7 +122,7 @@ const confiance = [
     icone: HardDrive,
     titre: "Vos données restent chez vous",
     texte:
-      "Plutus s'installe sur votre poste. Dossiers, documents et historique sont stockés localement — il n'existe aucun serveur Plutus qui les collecte.",
+      "Noltan s'installe sur votre poste. Dossiers, documents et historique sont stockés localement — il n'existe aucun serveur Noltan qui les collecte.",
   },
   {
     icone: ShieldCheck,
@@ -227,7 +227,7 @@ const Accueil: React.FC = () => (
         </div>
 
         <p className="reveal mt-14 max-w-2xl text-pretty text-lg font-medium leading-relaxed text-ink-900">
-          Plutus réunit tout cela dans un seul espace de travail : les informations, les
+          Noltan réunit tout cela dans un seul espace de travail : les informations, les
           rendez-vous, les documents et le suivi s'enchaînent — au lieu de s'empiler.
         </p>
       </div>
@@ -323,10 +323,10 @@ const Accueil: React.FC = () => (
               La différence
             </p>
             <h2 className="mt-3 text-balance text-3xl font-semibold tracking-tight text-ink-900 sm:text-4xl">
-              Ce que Plutus n'est pas
+              Ce que Noltan n'est pas
             </h2>
             <ul className="mt-8 space-y-4">
-              {cePlutusNestPas.map((item) => (
+              {ceNoltanNestPas.map((item) => (
                 <li
                   key={item}
                   className="flex items-start gap-3 text-[15px] leading-relaxed text-ink-700"
@@ -387,7 +387,7 @@ const Accueil: React.FC = () => (
           </h2>
           <p className="mt-4 text-pretty text-base leading-relaxed text-ink-400">
             Vos dossiers sont enregistrés sur votre poste, et n'en partent pas : il n'existe aucun
-            serveur Plutus où ils seraient envoyés. Seuls les services que vous activez — votre
+            serveur Noltan où ils seraient envoyés. Seuls les services que vous activez — votre
             compte Google, vos extranets — reçoivent les informations nécessaires à leur
             fonctionnement.
           </p>
@@ -406,7 +406,7 @@ const Accueil: React.FC = () => (
         {/* Détail des accès Google : transparence exigée par la vérification OAuth */}
         <div className="reveal mt-5 rounded-2xl border border-gold-300/20 bg-gold-500/5 p-7">
           <h3 className="text-[15px] font-semibold text-gold-100">
-            Ce que Plutus fait — et ne fait pas — avec votre compte Google
+            Ce que Noltan fait — et ne fait pas — avec votre compte Google
           </h3>
           <div className="mt-5 grid gap-6 md:grid-cols-2">
             <div>
@@ -415,7 +415,7 @@ const Accueil: React.FC = () => (
               </p>
               <p className="mt-1.5 text-sm leading-relaxed text-ink-400">
                 Créer, modifier et supprimer <em>uniquement</em> les événements planifiés depuis
-                Plutus. Afficher votre planning de la journée pour empêcher tout chevauchement de
+                Noltan. Afficher votre planning de la journée pour empêcher tout chevauchement de
                 créneaux.
               </p>
             </div>
@@ -424,7 +424,7 @@ const Accueil: React.FC = () => (
                 E-mail <span className="font-normal text-ink-400">(gmail.send)</span>
               </p>
               <p className="mt-1.5 text-sm leading-relaxed text-ink-400">
-                Envoyer vos comptes rendus depuis votre adresse, à votre demande explicite. Plutus
+                Envoyer vos comptes rendus depuis votre adresse, à votre demande explicite. Noltan
                 ne lit jamais votre boîte de réception et n'envoie rien sans votre clic.
               </p>
             </div>
@@ -444,7 +444,7 @@ const Accueil: React.FC = () => (
     <section className="bg-white py-24">
       <div className="reveal mx-auto max-w-2xl px-6 text-center">
         <h2 className="text-balance text-3xl font-semibold tracking-tight text-ink-900 sm:text-4xl">
-          Découvrez Plutus sur un <span className="accent-serif">vrai</span> dossier
+          Découvrez Noltan sur un <span className="accent-serif">vrai</span> dossier
         </h2>
         <p className="mt-5 text-pretty text-base leading-relaxed text-ink-500">
           La démonstration se fait en visio, sur un cas concret proche de votre pratique : de
