@@ -16,6 +16,7 @@
     "verifier": "node scripts/verifier-publication.mjs",
     "verifier:depot": "node scripts/verifier-depot.mjs",
     "verifier:version": "node scripts/verifier-version.mjs",
+    "og": "node scripts/og-image.mjs",
     "controle": "node scripts/captures-controle.mjs"
   },
   "dependencies": {

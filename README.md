@@ -54,6 +54,13 @@ npm run controle          # captures d'écran du site → controle-visuel/ (non 
   version présentée comme actuelle.
 - Aucun secret, aucun déclenchement inter-dépôts n'est nécessaire.
 
+## Image de partage (og.png)
+
+`npm run og` régénère `public/og.png` (1200 × 630) depuis
+`scripts/og-image.html` avec Edge (Playwright) — même marque, polices et
+teintes que le site. À relancer quand le nom, la promesse ou le domaine
+changent, puis vérifier l'image et la committer.
+
 ## Mettre à jour les captures du produit
 
 Les 9 images de `public/captures/` montrent l'application remplie d'un jeu de
