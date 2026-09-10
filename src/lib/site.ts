@@ -9,7 +9,7 @@ export const SITE = {
   /** URL publique du site (écran de consentement Google + balises canoniques). */
   url: "https://noltan.fr",
   /** Adresse de contact affichée sur le site et dans la politique de confidentialité. */
-  emailContact: "valentin7892@gmail.com",
+  emailContact: "contact@noltan.fr",
 
   /* ——— Téléchargement ———
      SOURCE DE VÉRITÉ UNIQUE : version.json du dépôt public de releases,
@@ -23,7 +23,7 @@ export const SITE = {
   poidsInstalleur: "≈ 40 Mo",
 
   editeur: "Valentin L'Hotellier",
-  derniereMajLegale: "17 juillet 2026",
+  derniereMajLegale: "10 septembre 2026",
 
   /* ——— Action commerciale (un seul endroit pour tout changer) ——— */
   /** Libellé unique du bouton d'action, utilisé partout à l'identique. */
