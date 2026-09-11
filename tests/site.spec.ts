@@ -62,6 +62,28 @@ test("les liens internes de la page d'accueil répondent", async ({ page, reques
   }
 });
 
+test("le favicon est un fichier réel que Google peut lire (jamais une data URI)", async ({
+  page,
+  request,
+}) => {
+  await intercepterVersion(page, "ok");
+  await page.goto("/");
+  const hrefs = await page
+    .locator('link[rel="icon"], link[rel="apple-touch-icon"]')
+    .evaluateAll((ls) => ls.map((l) => (l as HTMLLinkElement).getAttribute("href") ?? ""));
+  expect(hrefs.length).toBeGreaterThanOrEqual(2);
+  for (const href of hrefs) {
+    // Google n'explore pas une data URI et ne prend pas le SVG en charge :
+    // sans fichier image réel, le résultat s'affiche avec un globe générique.
+    expect(href, "favicon inline").toMatch(/^\/.+\.(ico|png)$/);
+    const reponse = await request.get(href);
+    expect(reponse.status(), `favicon absent : ${href}`).toBe(200);
+    expect(reponse.headers()["content-type"], href).toMatch(/^image\//);
+  }
+  // Repli historique des navigateurs et de Google : /favicon.ico à la racine.
+  expect((await request.get("/favicon.ico")).status()).toBe(200);
+});
+
 test.describe("mobile (390 px)", () => {
   test.use({ viewport: { width: 390, height: 844 } });
 

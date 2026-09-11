@@ -61,6 +61,17 @@ npm run controle          # captures d'écran du site → controle-visuel/ (non 
 teintes que le site. À relancer quand le nom, la promesse ou le domaine
 changent, puis vérifier l'image et la committer.
 
+## Favicon (onglet du navigateur et résultats Google)
+
+`public/favicon.ico`, `public/favicon.png` (256 × 256) et
+`public/apple-touch-icon.png` (180 × 180, réduction du précédent) sont des
+copies de l'icône réelle de l'application (`assets/icone.ico` et `icone.png`
+du dépôt privé) : l'onglet, Google et le poste installé montrent le même
+dessin. À recopier quand l'icône de l'application change, sans jamais renommer
+les fichiers (Google exige une URL stable). Pas de SVG ni de data URI : Google
+n'accepte que des fichiers image (ICO, PNG, JPEG…) qu'il peut télécharger, et
+affiche sinon un globe générique à la place du logo.
+
 ## Mettre à jour les captures du produit
 
 Les 9 images de `public/captures/` montrent l'application remplie d'un jeu de
