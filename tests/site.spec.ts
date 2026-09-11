@@ -143,3 +143,55 @@ test.describe("page de téléchargement — version.json", () => {
     await expect(page.locator("main")).not.toContainText("???");
   });
 });
+
+test.describe("prise de rendez-vous pour la démonstration", () => {
+  /** Le script Calendly (externe) est remplacé par un script vide : jamais de réseau. */
+  const neutraliserCalendly = (page: Page) =>
+    page.route("https://assets.calendly.com/**", (route) =>
+      route.fulfill({ contentType: "application/javascript", body: "" }),
+    );
+
+  test("le bouton d'action mène au calendrier intégré, ou à un e-mail pré-rempli à défaut", async ({
+    page,
+  }) => {
+    await intercepterVersion(page, "ok");
+    await neutraliserCalendly(page);
+    await page.goto("/demo/");
+    await expect(page.locator("h1").first()).toBeVisible();
+    const bouton = page.locator("main a", { hasText: "Demander une démonstration" }).first();
+    const href = (await bouton.getAttribute("href")) ?? "";
+    const calendrier = page.locator(".calendly-inline-widget");
+    if (href.startsWith("mailto:")) {
+      // Calendrier non branché : e-mail pré-rempli, et aucun faux calendrier.
+      expect(href).toContain("subject=");
+      await expect(calendrier).toHaveCount(0);
+    } else {
+      expect(href).toMatch(/\/demo\/#rdv$/);
+      await expect(page.locator("section#rdv")).toBeVisible();
+      await expect(calendrier).toHaveAttribute(
+        "data-url",
+        /^https:\/\/calendly\.com\/[^/?#]+\/[^/?#]+\?/,
+      );
+      // Lien de secours vers la page Calendly nue, dans un nouvel onglet.
+      await expect(page.locator('section#rdv a[href^="https://calendly.com/"]')).toHaveAttribute(
+        "target",
+        "_blank",
+      );
+    }
+  });
+
+  test("la politique de confidentialité mentionne Calendly si, et seulement si, le calendrier est branché", async ({
+    page,
+  }) => {
+    await intercepterVersion(page, "ok");
+    await neutraliserCalendly(page);
+    await page.goto("/demo/");
+    await expect(page.locator("h1").first()).toBeVisible();
+    const branche = (await page.locator(".calendly-inline-widget").count()) > 0;
+    await page.goto("/confidentialite/");
+    const politique = (await page.locator("main").textContent()) ?? "";
+    expect(politique.includes("Calendly"), "politique de confidentialité ↔ calendrier").toBe(
+      branche,
+    );
+  });
+});

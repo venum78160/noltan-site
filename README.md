@@ -80,6 +80,26 @@ l'application : il est documenté dans le dépôt privé (documentation interne 
 site). Pour publier de nouvelles captures, remplacer les fichiers `.webp` de
 `public/captures/` à noms constants — le site les reprend tel quel.
 
+## Prise de rendez-vous (Calendly)
+
+La démonstration se réserve dans un **calendrier Calendly intégré** à la page
+`/demo/` (section `#rdv`, sans fenêtre surgissante), sur le modèle du site du
+cabinet pilote. Une seule valeur commande tout : `SITE.urlCalendly` dans
+[`src/lib/site.ts`](src/lib/site.ts), l'URL du type d'événement
+(`https://calendly.com/<compte>/<slug>`).
+
+- **Vide** : aucun calendrier n'est simulé — le bouton « Demander une
+  démonstration » ouvre un e-mail pré-rempli.
+- **Renseignée** : le calendrier apparaît sur `/demo/#rdv`, tous les boutons
+  d'action y mènent et la politique de confidentialité décrit le traitement
+  Calendly. Une URL d'une autre forme est refusée par `npm run typecheck`.
+
+Le script Calendly n'est chargé que sur la page de démonstration
+(`src/components/site/CalendrierRdv.tsx`) ; s'il est bloqué, un lien ouvre la
+page Calendly dans un nouvel onglet. Les tests Playwright vérifient que la
+politique de confidentialité mentionne Calendly si, et seulement si, le
+calendrier est branché.
+
 ## Configuration
 
 Tout ce qui s'affiche (coordonnées, libellés, champs légaux) est centralisé

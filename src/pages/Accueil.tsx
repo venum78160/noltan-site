@@ -13,7 +13,7 @@ import { PageShell } from "@/components/site/PageShell";
 import { Parcours } from "@/components/site/Parcours";
 import { ShaderCanvas } from "@/components/ui/animated-shader-hero";
 import { ButtonLink } from "@/components/ui/button";
-import { LIEN_DEMO, SITE } from "@/lib/site";
+import { LIEN_DEMO, RDV_EN_LIGNE, SITE } from "@/lib/site";
 import { lien } from "@/lib/utils";
 
 /* ——— Contenu ——— */
@@ -461,7 +461,9 @@ const Accueil: React.FC = () => (
           </ButtonLink>
         </div>
         <p className="mt-5 text-[13px] text-ink-500">
-          Une simple demande par e-mail — nous revenons vers vous rapidement avec des créneaux.
+          {RDV_EN_LIGNE
+            ? "Choisissez directement votre créneau dans le calendrier — sans engagement."
+            : "Une simple demande par e-mail — nous revenons vers vous rapidement avec des créneaux."}
         </p>
       </div>
     </section>

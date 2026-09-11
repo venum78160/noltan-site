@@ -35,8 +35,21 @@ interface PageShellProps {
   children: React.ReactNode;
 }
 
+/**
+ * Le contenu est rendu par React après le chargement : à l'arrivée sur une URL
+ * avec ancre (/demo/#rdv depuis l'accueil), le navigateur cherche la cible
+ * avant qu'elle existe et reste en haut de page — on y défile une fois montés.
+ */
+const useAncreInitiale = () => {
+  useEffect(() => {
+    const id = decodeURIComponent(window.location.hash.slice(1));
+    if (id) document.getElementById(id)?.scrollIntoView();
+  }, []);
+};
+
 export const PageShell: React.FC<PageShellProps> = ({ heroOverlay = false, children }) => {
   useReveal();
+  useAncreInitiale();
   return (
     <div className="flex min-h-svh flex-col">
       <SiteNav overlay={heroOverlay} />

@@ -1,9 +1,10 @@
 import { Check, ListChecks, MessagesSquare, Video } from "lucide-react";
 import type React from "react";
+import { CalendrierRdv } from "@/components/site/CalendrierRdv";
 import { Capture } from "@/components/site/Capture";
 import { PageShell } from "@/components/site/PageShell";
 import { ButtonLink } from "@/components/ui/button";
-import { LIEN_DEMO, RDV_EN_LIGNE, SITE } from "@/lib/site";
+import { LIEN_DEMO, RDV_EN_LIGNE, SITE, URL_CALENDLY_INTEGREE } from "@/lib/site";
 import { lien } from "@/lib/utils";
 
 const deroulement = [
@@ -54,7 +55,9 @@ const Demo: React.FC = () => (
           {SITE.dureeDemo && <p className="text-[13px] text-ink-500">Durée : {SITE.dureeDemo}</p>}
           <p className="text-[13px] text-ink-500">
             {RDV_EN_LIGNE ? (
-              <>Choisissez directement un créneau dans l'agenda — sans engagement.</>
+              <>
+                Choisissez directement un créneau dans le calendrier ci-dessous — sans engagement.
+              </>
             ) : (
               <>
                 Le bouton ouvre un e-mail pré-rempli : indiquez vos disponibilités, nous revenons
@@ -131,6 +134,40 @@ const Demo: React.FC = () => (
         </div>
       </div>
     </section>
+
+    {/* ——— Le calendrier, uniquement quand il est branché (site.ts) ——— */}
+    {RDV_EN_LIGNE && (
+      <section id="rdv" className="scroll-mt-16 border-t border-ink-200 bg-ink-50 py-20">
+        <div className="mx-auto max-w-5xl px-6">
+          <div className="mx-auto max-w-2xl text-center">
+            <p className="text-[13px] font-semibold uppercase tracking-wider text-gold-700">
+              Prendre rendez-vous
+            </p>
+            <h2 className="mt-3 text-balance text-2xl font-semibold tracking-tight text-ink-900 sm:text-3xl">
+              Choisissez votre créneau
+            </h2>
+            <p className="mt-4 text-pretty text-base leading-relaxed text-ink-500">
+              {SITE.dureeDemo ? `${SITE.dureeDemo} en visio` : "En visio"}, à l'horaire qui vous
+              convient. La confirmation et le lien de visioconférence vous parviennent aussitôt par
+              e-mail.
+            </p>
+          </div>
+          <div className="mt-10">
+            <CalendrierRdv url={URL_CALENDLY_INTEGREE} urlSecours={SITE.urlCalendly} />
+          </div>
+          <p className="mt-6 text-center text-[13px] text-ink-500">
+            Vous préférez écrire ? Une ligne à{" "}
+            <a
+              href={`mailto:${SITE.emailContact}`}
+              className="cursor-pointer font-medium text-gold-700 hover:underline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ink-900"
+            >
+              {SITE.emailContact}
+            </a>{" "}
+            suffit.
+          </p>
+        </div>
+      </section>
+    )}
   </PageShell>
 );
 

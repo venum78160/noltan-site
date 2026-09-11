@@ -1,3 +1,12 @@
+import { lien } from "@/lib/utils";
+
+/**
+ * "" tant que le calendrier n'est pas branché, sinon l'URL exacte d'un type
+ * d'événement Calendly (https://calendly.com/<compte>/<slug>) — toute autre
+ * forme est refusée à la compilation (npm run typecheck).
+ */
+type UrlCalendly = "" | `https://calendly.com/${string}/${string}`;
+
 /**
  * Configuration centrale du site — l'action commerciale et les informations
  * légales se règlent UNIQUEMENT ici (aucune duplication dans les fichiers
@@ -23,19 +32,20 @@ export const SITE = {
   poidsInstalleur: "≈ 40 Mo",
 
   editeur: "Valentin L'Hotellier",
-  derniereMajLegale: "10 septembre 2026",
+  derniereMajLegale: "11 septembre 2026",
 
   /* ——— Action commerciale (un seul endroit pour tout changer) ——— */
   /** Libellé unique du bouton d'action, utilisé partout à l'identique. */
   libelleDemo: "Demander une démonstration",
   /** Durée affichée pour la démonstration. "" = non affichée. */
-  dureeDemo: "",
+  dureeDemo: "30 minutes",
   /**
-   * URL d'un outil de prise de rendez-vous (page de réservation Google Agenda,
-   * Calendly…). Tant que la valeur est vide, le site propose l'e-mail
-   * pré-rempli ci-dessous — aucun faux calendrier n'est simulé.
+   * URL du type d'événement Calendly de la démonstration. Vide : le site
+   * propose l'e-mail pré-rempli ci-dessous — aucun faux calendrier n'est
+   * simulé. Renseignée : calendrier intégré sur /demo/#rdv, boutons d'action
+   * redirigés dessus, politique de confidentialité complétée (cf. README).
    */
-  lienPriseRdv: "",
+  urlCalendly: "https://calendly.com/noltan/demonstration" satisfies UrlCalendly,
 
   /* ——— Promesses configurables ——— */
   /** Accompagnement au démarrage : formulation prudente tant que le dispositif
@@ -70,8 +80,20 @@ Disponibilités :
 Merci !`,
 )}`;
 
-/** Lien effectif du bouton « Demander une démonstration ». */
-export const LIEN_DEMO = SITE.lienPriseRdv || MAILTO_DEMO;
+/** true si la prise de rendez-vous en ligne (Calendly) est branchée. */
+export const RDV_EN_LIGNE = SITE.urlCalendly.length > 0;
 
-/** true si la prise de rendez-vous en ligne est branchée. */
-export const RDV_EN_LIGNE = SITE.lienPriseRdv.length > 0;
+/**
+ * Lien effectif du bouton « Demander une démonstration » : le calendrier
+ * intégré de la page de démonstration, sinon l'e-mail pré-rempli.
+ */
+export const LIEN_DEMO = RDV_EN_LIGNE ? lien("/demo/#rdv") : MAILTO_DEMO;
+
+/**
+ * URL du calendrier intégré (widget Calendly « inline ») aux couleurs du site :
+ * or Noltan pour l'action, encre pour le texte, fond blanc. Le bandeau cookies
+ * de Calendly reste affiché — ce sont ses cookies, pas les nôtres.
+ */
+export const URL_CALENDLY_INTEGREE = RDV_EN_LIGNE
+  ? `${SITE.urlCalendly}?primary_color=86611e&text_color=0f172a&background_color=ffffff`
+  : "";

@@ -1,6 +1,6 @@
 import type React from "react";
 import { PageShell } from "@/components/site/PageShell";
-import { SITE } from "@/lib/site";
+import { RDV_EN_LIGNE, SITE } from "@/lib/site";
 
 const Confidentialite: React.FC = () => (
   <PageShell>
@@ -125,15 +125,39 @@ const Confidentialite: React.FC = () => (
         <h2>3. Données collectées par ce site</h2>
         <p>
           Le site {SITE.url} est un site vitrine statique : il ne dépose{" "}
-          <strong>aucun cookie de suivi</strong>, n'embarque aucun outil publicitaire et ne comporte
-          aucun formulaire de collecte. Les journaux techniques standards de l'hébergeur (adresses
-          IP, pages consultées) sont conservés par celui-ci pour la sécurité et supprimés selon ses
-          délais légaux.
+          <strong>aucun cookie de suivi</strong> et n'embarque aucun outil publicitaire.{" "}
+          {RDV_EN_LIGNE
+            ? "Son seul formulaire est la prise de rendez-vous décrite au point 3.1."
+            : "Il ne comporte aucun formulaire de collecte."}{" "}
+          Les journaux techniques standards de l'hébergeur (adresses IP, pages consultées) sont
+          conservés par celui-ci pour la sécurité et supprimés selon ses délais légaux.
         </p>
+        {RDV_EN_LIGNE && (
+          <>
+            <h3>3.1 Prise de rendez-vous pour une démonstration</h3>
+            <p>
+              Le calendrier de réservation de la page de démonstration est fourni par{" "}
+              <strong>Calendly</strong> (Calendly LLC, États-Unis) et n'est chargé que sur cette
+              page. En réservant un créneau, vous communiquez votre nom, votre adresse e-mail et, si
+              vous le souhaitez, le nom de votre cabinet, le nombre de conseillers et un message
+              pour préparer la démonstration. Ces données servent uniquement à organiser le
+              rendez-vous demandé (mesures précontractuelles prises à votre demande, article 6.1.b
+              du RGPD) ; sans suite de votre part, elles sont supprimées au plus tard six mois après
+              le dernier échange. Calendly les traite pour le compte de l'éditeur et peut les
+              héberger hors de l'Union européenne, avec les garanties prévues par le RGPD (clauses
+              contractuelles types) ; il dépose les cookies nécessaires au fonctionnement du
+              calendrier et vous en informe dans celui-ci. Vous pouvez toujours demander une
+              démonstration par simple e-mail à{" "}
+              <a href={`mailto:${SITE.emailContact}`}>{SITE.emailContact}</a>, sans passer par le
+              calendrier.
+            </p>
+          </>
+        )}
 
         <h2>4. Licences et échanges avec l'éditeur</h2>
         <p>
-          Lorsqu'un utilisateur contacte l'éditeur (par e-mail) ou souscrit une licence, l'éditeur
+          Lorsqu'un utilisateur contacte l'éditeur (par e-mail
+          {RDV_EN_LIGNE && " ou en réservant une démonstration"}) ou souscrit une licence, l'éditeur
           traite les seules données nécessaires à cette relation : nom, adresse e-mail, cabinet et
           informations de facturation le cas échéant. Ces données ne sont jamais cédées à des tiers
           et sont conservées pendant la durée de la relation commerciale, puis les durées légales
