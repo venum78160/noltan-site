@@ -37,10 +37,7 @@ function urlSure(valeur) {
     return null;
   }
   if (u.protocol !== "https:" || u.hostname !== "github.com") return null;
-  // « Plutus » : ancien nom du dépôt de releases (avant le 10/09/2026) — les
-  // releases publiées sous ce nom gardent leurs URL (GitHub redirige). À
-  // retirer après la première release publiée sous le nom Noltan.
-  if (!/^\/venum78160\/(Noltan|Plutus)\//.test(u.pathname)) return null;
+  if (!u.pathname.startsWith("/venum78160/Noltan/")) return null;
   return u.href;
 }
 
