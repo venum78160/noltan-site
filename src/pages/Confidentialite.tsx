@@ -145,9 +145,13 @@ const Confidentialite: React.FC = () => (
               du RGPD) ; sans suite de votre part, elles sont supprimées au plus tard six mois après
               le dernier échange. Calendly les traite pour le compte de l'éditeur et peut les
               héberger hors de l'Union européenne, avec les garanties prévues par le RGPD (clauses
-              contractuelles types) ; il dépose les cookies nécessaires au fonctionnement du
-              calendrier et vous en informe dans celui-ci. Vous pouvez toujours demander une
-              démonstration par simple e-mail à{" "}
+              contractuelles types). Le calendrier dépose les cookies nécessaires à son
+              fonctionnement ; son bandeau d'information est masqué ici pour ne pas gêner la
+              réservation, et les traitements propres à Calendly sont décrits dans sa{" "}
+              <a href="https://calendly.com/legal/privacy-notice" target="_blank" rel="noreferrer">
+                politique de confidentialité
+              </a>
+              . Vous pouvez toujours demander une démonstration par simple e-mail à{" "}
               <a href={`mailto:${SITE.emailContact}`}>{SITE.emailContact}</a>, sans passer par le
               calendrier.
             </p>

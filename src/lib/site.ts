@@ -92,8 +92,9 @@ export const LIEN_DEMO = RDV_EN_LIGNE ? lien("/demo/#rdv") : MAILTO_DEMO;
 /**
  * URL du calendrier intégré (widget Calendly « inline ») aux couleurs du site :
  * or Noltan pour l'action, encre pour le texte, fond blanc. Le bandeau cookies
- * de Calendly reste affiché — ce sont ses cookies, pas les nôtres.
+ * de Calendly est masqué (hide_gdpr_banner, décision du 11/09/2026) : le
+ * point 3.1 de la politique de confidentialité informe à sa place.
  */
 export const URL_CALENDLY_INTEGREE = RDV_EN_LIGNE
-  ? `${SITE.urlCalendly}?primary_color=86611e&text_color=0f172a&background_color=ffffff`
+  ? `${SITE.urlCalendly}?hide_gdpr_banner=1&primary_color=86611e&text_color=0f172a&background_color=ffffff`
   : "";
