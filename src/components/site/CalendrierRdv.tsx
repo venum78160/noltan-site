@@ -2,9 +2,42 @@ import { ExternalLink } from "lucide-react";
 import type React from "react";
 import { useEffect, useRef, useState } from "react";
 import { ButtonLink } from "@/components/ui/button";
+import { type Evenement, suivre } from "@/lib/mesure";
 
 /** Script officiel du widget Calendly — chargé une seule fois, à la demande. */
 const SCRIPT_CALENDLY = "https://assets.calendly.com/assets/external/widget.js";
+
+/** Origine des messages du widget : tout message d'une autre origine est ignoré. */
+const ORIGINE_CALENDLY = "https://calendly.com";
+
+/** Étapes de la réservation que le widget signale à la page (window.postMessage). */
+const ETAPES_CALENDLY: Record<string, Evenement> = {
+  "calendly.profile_page_viewed": "rdv_calendrier",
+  "calendly.event_type_viewed": "rdv_evenement",
+  "calendly.date_and_time_selected": "rdv_creneau",
+  "calendly.event_scheduled": "rdv_reserve",
+};
+
+/**
+ * Relais des étapes de réservation vers la mesure d'audience : seul le NOM de
+ * l'étape est lu (le widget n'envoie rien d'autre), uniquement depuis
+ * calendly.com — aucune donnée personnelle, jamais ce que le visiteur saisit.
+ */
+const useEtapesCalendly = () => {
+  useEffect(() => {
+    const onMessage = (e: MessageEvent) => {
+      if (e.origin !== ORIGINE_CALENDLY) return;
+      const donnees: unknown = e.data;
+      if (typeof donnees !== "object" || donnees === null) return;
+      const nom = (donnees as { event?: unknown }).event;
+      if (typeof nom !== "string") return;
+      const evenement = ETAPES_CALENDLY[nom];
+      if (evenement) suivre(evenement);
+    };
+    window.addEventListener("message", onMessage);
+    return () => window.removeEventListener("message", onMessage);
+  }, []);
+};
 
 declare global {
   interface Window {
@@ -39,6 +72,7 @@ interface CalendrierRdvProps {
 export const CalendrierRdv: React.FC<CalendrierRdvProps> = ({ url, urlSecours }) => {
   const conteneur = useRef<HTMLDivElement>(null);
   const [bloque, setBloque] = useState(false);
+  useEtapesCalendly();
 
   useEffect(() => {
     const el = conteneur.current;

@@ -13,6 +13,7 @@ import { PageShell } from "@/components/site/PageShell";
 import { Parcours } from "@/components/site/Parcours";
 import { ShaderCanvas } from "@/components/ui/animated-shader-hero";
 import { ButtonLink } from "@/components/ui/button";
+import { attributsMesure } from "@/lib/mesure";
 import { LIEN_DEMO, RDV_EN_LIGNE, SITE } from "@/lib/site";
 import { lien } from "@/lib/utils";
 
@@ -178,6 +179,7 @@ const Accueil: React.FC = () => (
             href={lien("/demo/")}
             size="lg"
             className="bg-white text-ink-900 shadow-lg shadow-black/20 hover:bg-gold-50 focus-visible:outline-white"
+            {...attributsMesure("demo_clic", { emplacement: "accueil-hero" })}
           >
             {SITE.libelleDemo}
           </ButtonLink>
@@ -453,7 +455,11 @@ const Accueil: React.FC = () => (
           structures.
         </p>
         <div className="mt-9 flex flex-col items-center justify-center gap-3 sm:flex-row">
-          <ButtonLink href={LIEN_DEMO} size="lg">
+          <ButtonLink
+            href={LIEN_DEMO}
+            size="lg"
+            {...attributsMesure("demo_clic", { emplacement: "accueil-fin" })}
+          >
             {SITE.libelleDemo}
           </ButtonLink>
           <ButtonLink href={lien("/demo/")} variant="secondary" size="lg">

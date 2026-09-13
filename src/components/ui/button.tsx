@@ -17,12 +17,15 @@ const sizeClasses: Record<Size, string> = {
   lg: "h-12 px-7 text-[15px]",
 };
 
+const baseClasses =
+  "inline-flex cursor-pointer items-center justify-center gap-2 rounded-full font-semibold transition-colors duration-200 focus-visible:outline-2 focus-visible:outline-offset-2";
+
 interface ButtonLinkProps extends React.AnchorHTMLAttributes<HTMLAnchorElement> {
   variant?: Variant;
   size?: Size;
 }
 
-/** Bouton-lien : toutes les actions du site sont des navigations. */
+/** Bouton-lien : hors formulaire, toutes les actions du site sont des navigations. */
 export const ButtonLink: React.FC<ButtonLinkProps> = ({
   variant = "primary",
   size = "default",
@@ -30,9 +33,30 @@ export const ButtonLink: React.FC<ButtonLinkProps> = ({
   children,
   ...props
 }) => (
-  <a
+  <a className={cn(baseClasses, variantClasses[variant], sizeClasses[size], className)} {...props}>
+    {children}
+  </a>
+);
+
+interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+  variant?: Variant;
+  size?: Size;
+}
+
+/** Bouton natif (envoi d'un formulaire) : mêmes styles que le bouton-lien. */
+export const Button: React.FC<ButtonProps> = ({
+  variant = "primary",
+  size = "default",
+  type = "button",
+  className,
+  children,
+  ...props
+}) => (
+  <button
+    type={type}
     className={cn(
-      "inline-flex cursor-pointer items-center justify-center gap-2 rounded-full font-semibold transition-colors duration-200 focus-visible:outline-2 focus-visible:outline-offset-2",
+      baseClasses,
+      "disabled:cursor-progress disabled:opacity-60",
       variantClasses[variant],
       sizeClasses[size],
       className,
@@ -40,5 +64,5 @@ export const ButtonLink: React.FC<ButtonLinkProps> = ({
     {...props}
   >
     {children}
-  </a>
+  </button>
 );

@@ -2,6 +2,7 @@ import { Menu, X } from "lucide-react";
 import type React from "react";
 import { useEffect, useRef, useState } from "react";
 import { ButtonLink } from "@/components/ui/button";
+import { attributsMesure } from "@/lib/mesure";
 import { SITE } from "@/lib/site";
 import { cn, lien } from "@/lib/utils";
 import { Logo } from "./Logo";
@@ -108,6 +109,7 @@ export const SiteNav: React.FC<SiteNavProps> = ({ overlay = false }) => {
             href={lien("/demo/")}
             variant={overlay && !solid ? "gold" : "primary"}
             className="hidden h-10 shrink-0 px-4 text-[13px] sm:inline-flex"
+            {...attributsMesure("demo_clic", { emplacement: "menu" })}
           >
             {SITE.libelleDemo}
           </ButtonLink>
@@ -163,6 +165,7 @@ export const SiteNav: React.FC<SiteNavProps> = ({ overlay = false }) => {
               href={lien("/demo/")}
               onClick={() => setOuvert(false)}
               className="mt-2 block cursor-pointer rounded-xl bg-ink-900 px-4 py-3 text-center text-[15px] font-semibold text-white transition-colors duration-200 hover:bg-ink-700 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ink-900"
+              {...attributsMesure("demo_clic", { emplacement: "menu-mobile" })}
             >
               {SITE.libelleDemo}
             </a>

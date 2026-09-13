@@ -8,6 +8,20 @@ import { lien } from "@/lib/utils";
 type UrlCalendly = "" | `https://calendly.com/${string}/${string}`;
 
 /**
+ * "" tant que la mesure d'audience n'est pas branchée, sinon l'identifiant de
+ * site fourni par Umami (un UUID) — toute autre forme est refusée à la
+ * compilation.
+ */
+type IdMesure = "" | `${string}-${string}-${string}-${string}-${string}`;
+
+/**
+ * "" tant que le formulaire n'est pas branché, sinon l'adresse de réception
+ * d'un formulaire Brevo (https://<compte>.sibforms.com/serve/<formulaire>) —
+ * toute autre forme est refusée à la compilation.
+ */
+type UrlFormulaire = "" | `https://${string}.sibforms.com/serve/${string}`;
+
+/**
  * Configuration centrale du site — l'action commerciale et les informations
  * légales se règlent UNIQUEMENT ici (aucune duplication dans les fichiers
  * Markdown du dépôt : ce qui est affiché sur le site vit dans ce fichier).
@@ -30,6 +44,29 @@ export const SITE = {
   urlReleases: "https://github.com/venum78160/Noltan/releases/latest",
   /** Poids approximatif de l'installeur, affiché à côté du bouton. */
   poidsInstalleur: "≈ 40 Mo",
+
+  /* ——— Mesure d'audience (sans cookie, hébergée en Union européenne) ———
+     Une seule valeur commande tout. Vide : aucun script chargé, aucun
+     événement envoyé, aucune mention dans la politique de confidentialité.
+     Renseignée : le script Umami est chargé sur toutes les pages, les gestes
+     clés sont comptés (téléchargement avec le système du visiteur, demande de
+     démonstration, étapes du calendrier, contact) et la politique décrit le
+     traitement (cf. README, section « Mesure d'audience »). */
+  /** Identifiant du site dans Umami Cloud (région UE), tel qu'affiché dans son code de suivi. */
+  idMesure: "" satisfies IdMesure,
+  /** URL du script de suivi, telle qu'affichée par Umami à côté de l'identifiant. */
+  urlScriptMesure: "https://cloud.umami.is/script.js",
+  /** Seuls ces domaines comptent : ni le poste de développement, ni l'aperçu GitHub Pages. */
+  domainesMesure: "noltan.fr,www.noltan.fr",
+
+  /* ——— Formulaire avant téléchargement (Brevo) ———
+     Vide : bouton de téléchargement direct. Renseignée : adresse de réception
+     du formulaire Brevo — l'encadré Prénom / Nom / E-mail / Cabinet précède le
+     bouton, le contact part dans Brevo (champs EMAIL, PRENOM, NOM, CABINET et
+     SOURCE, à créer dans le formulaire), le lien est aussi envoyé par e-mail
+     (automatisation Brevo) et la politique de confidentialité décrit le
+     traitement. Le téléchargement n'est JAMAIS bloqué par un échec d'envoi. */
+  formulaireTelechargement: "" satisfies UrlFormulaire,
 
   editeur: "Valentin L'Hotellier",
   derniereMajLegale: "11 septembre 2026",
@@ -89,12 +126,21 @@ export const RDV_EN_LIGNE = SITE.urlCalendly.length > 0;
  */
 export const LIEN_DEMO = RDV_EN_LIGNE ? lien("/demo/#rdv") : MAILTO_DEMO;
 
+/** true si la mesure d'audience est branchée (script chargé, gestes comptés). */
+export const MESURE_ACTIVE = SITE.idMesure.length > 0;
+
+/** true si le formulaire précède le bouton de téléchargement. */
+export const FORMULAIRE_ACTIF = SITE.formulaireTelechargement.length > 0;
+
 /**
  * URL du calendrier intégré (widget Calendly « inline ») aux couleurs du site :
  * or Noltan pour l'action, encre pour le texte, fond blanc. Le bandeau cookies
  * de Calendly est masqué (hide_gdpr_banner, décision du 11/09/2026) : le
- * point 3.1 de la politique de confidentialité informe à sa place.
+ * point 3.1 de la politique de confidentialité informe à sa place. Les
+ * paramètres utm_* sont conservés par Calendly sur chaque réservation : dans
+ * sa liste des réunions, une réservation faite depuis le site se distingue
+ * d'une réservation faite depuis un lien envoyé par e-mail.
  */
 export const URL_CALENDLY_INTEGREE = RDV_EN_LIGNE
-  ? `${SITE.urlCalendly}?hide_gdpr_banner=1&primary_color=86611e&text_color=0f172a&background_color=ffffff`
+  ? `${SITE.urlCalendly}?hide_gdpr_banner=1&primary_color=86611e&text_color=0f172a&background_color=ffffff&utm_source=noltan.fr&utm_medium=site&utm_campaign=demo`
   : "";

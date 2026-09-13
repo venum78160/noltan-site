@@ -100,6 +100,63 @@ page Calendly dans un nouvel onglet. Les tests Playwright vérifient que la
 politique de confidentialité mentionne Calendly si, et seulement si, le
 calendrier est branché.
 
+## Mesure d'audience (Umami, sans cookie)
+
+La fréquentation du site se mesure avec **Umami Cloud** (région Union
+européenne), sans cookie ni bandeau : rien n'est déposé sur l'appareil du
+visiteur, l'adresse IP n'est pas conservée. Une seule valeur commande tout :
+`SITE.idMesure` dans [`src/lib/site.ts`](src/lib/site.ts), l'identifiant de
+site affiché par Umami (un UUID — une autre forme est refusée par
+`npm run typecheck`).
+
+- **Vide** : aucun script chargé, aucun événement envoyé, aucune mention dans
+  la politique de confidentialité.
+- **Renseigné** : le script est chargé sur toutes les pages
+  (`src/components/site/PageShell.tsx`), limité aux domaines de
+  `SITE.domainesMesure` (le poste de développement et l'aperçu GitHub Pages ne
+  comptent jamais), et la politique de confidentialité décrit le traitement.
+
+Tout ce qui est compté passe par [`src/lib/mesure.ts`](src/lib/mesure.ts)
+(vocabulaire fermé : un nom inconnu ne compile pas) :
+
+| Événement | Geste | Propriétés |
+|---|---|---|
+| `telechargement` | clic sur le bouton de téléchargement | `systeme` (windows / macos / autre), `version` |
+| `demo_clic` | clic sur « Demander une démonstration » | `emplacement` (menu, menu-mobile, accueil-hero, accueil-fin, demo-haut, telechargement, pied) |
+| `rdv_calendrier`, `rdv_evenement`, `rdv_creneau`, `rdv_reserve` | étapes du calendrier Calendly, signalées par le widget (`window.postMessage`, origine calendly.com seulement, aucune donnée personnelle) | — |
+| `contact_email` | clic sur l'adresse de contact | `emplacement` |
+| `formulaire_affiche`, `formulaire_envoye`, `formulaire_erreur` | formulaire avant téléchargement (section suivante) | `appareil` (ordinateur / mobile) |
+
+Les gestes à un clic se déclarent par attributs `data-umami-event` (le script
+attend la fin de l'envoi avant de suivre un lien) ; les autres passent par
+`suivre()`. Pages vues, sources, UTM, pays, système et appareil sont mesurés
+automatiquement. Le calendrier intégré porte `utm_source=noltan.fr` : dans
+Calendly, une réservation faite depuis le site se distingue d'une réservation
+faite depuis un lien envoyé par e-mail.
+
+## Formulaire avant téléchargement (Brevo)
+
+Quand `SITE.formulaireTelechargement` est renseigné (adresse de réception d'un
+formulaire Brevo, `https://<compte>.sibforms.com/serve/<formulaire>` — une
+autre forme est refusée par `npm run typecheck`), un encadré Prénom / Nom /
+E-mail professionnel / Cabinet (facultatif) précède le bouton de la page de
+téléchargement (`src/components/site/FormulaireTelechargement.tsx`) :
+
+- le contact part dans Brevo (champs `EMAIL`, `PRENOM`, `NOM`, `CABINET` et
+  `SOURCE`, à créer dans le formulaire côté Brevo — `SOURCE` reçoit le système,
+  l'appareil et la version), et le bouton de téléchargement apparaît
+  **aussitôt** ; une automatisation Brevo envoie le lien par e-mail ;
+- un échec d'envoi ne bloque jamais le téléchargement : le bouton apparaît, le
+  message le dit, l'événement `formulaire_erreur` le rend visible ;
+- depuis un téléphone (installation impossible), le bouton devient « Recevoir
+  le lien sur mon ordinateur » ;
+- la politique de confidentialité décrit le traitement (Brevo, finalités,
+  durée) si, et seulement si, le formulaire est branché — vérifié par les
+  tests, comme pour Calendly.
+
+**Vide** : bouton de téléchargement direct. Quand l'une de ces valeurs change,
+actualiser aussi `SITE.derniereMajLegale`.
+
 ## Configuration
 
 Tout ce qui s'affiche (coordonnées, libellés, champs légaux) est centralisé

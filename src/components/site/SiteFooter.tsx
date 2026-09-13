@@ -1,4 +1,5 @@
 import type React from "react";
+import { attributsMesure } from "@/lib/mesure";
 import { SITE } from "@/lib/site";
 import { lien } from "@/lib/utils";
 import { Logo } from "./Logo";
@@ -46,16 +47,26 @@ export const SiteFooter: React.FC = () => (
                 {col.titre}
               </h3>
               <ul className="mt-4 space-y-2.5">
-                {col.liens.map((l) => (
-                  <li key={l.href}>
-                    <a
-                      href={l.href.startsWith("mailto:") ? l.href : lien(l.href)}
-                      className="cursor-pointer break-all text-sm text-ink-700 transition-colors duration-200 hover:text-ink-900 hover:underline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ink-900"
-                    >
-                      {l.label}
-                    </a>
-                  </li>
-                ))}
+                {col.liens.map((l) => {
+                  const mailto = l.href.startsWith("mailto:");
+                  // Gestes comptés par la mesure d'audience : contact et demande de démonstration.
+                  const mesure = mailto
+                    ? attributsMesure("contact_email", { emplacement: "pied" })
+                    : l.href === "/demo/"
+                      ? attributsMesure("demo_clic", { emplacement: "pied" })
+                      : undefined;
+                  return (
+                    <li key={l.href}>
+                      <a
+                        href={mailto ? l.href : lien(l.href)}
+                        className="cursor-pointer break-all text-sm text-ink-700 transition-colors duration-200 hover:text-ink-900 hover:underline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ink-900"
+                        {...mesure}
+                      >
+                        {l.label}
+                      </a>
+                    </li>
+                  );
+                })}
               </ul>
             </div>
           ))}

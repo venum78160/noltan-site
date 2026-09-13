@@ -1,5 +1,6 @@
 import type React from "react";
 import { useEffect } from "react";
+import { chargerMesure } from "@/lib/mesure";
 import { SiteFooter } from "./SiteFooter";
 import { SiteNav } from "./SiteNav";
 
@@ -47,9 +48,17 @@ const useAncreInitiale = () => {
   }, []);
 };
 
+/** Mesure d'audience sans cookie : un seul point de chargement pour toutes les pages. */
+const useMesure = () => {
+  useEffect(() => {
+    chargerMesure();
+  }, []);
+};
+
 export const PageShell: React.FC<PageShellProps> = ({ heroOverlay = false, children }) => {
   useReveal();
   useAncreInitiale();
+  useMesure();
   return (
     <div className="flex min-h-svh flex-col">
       <SiteNav overlay={heroOverlay} />

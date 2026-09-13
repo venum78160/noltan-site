@@ -1,6 +1,33 @@
 import type React from "react";
 import { PageShell } from "@/components/site/PageShell";
-import { RDV_EN_LIGNE, SITE } from "@/lib/site";
+import { FORMULAIRE_ACTIF, MESURE_ACTIVE, RDV_EN_LIGNE, SITE } from "@/lib/site";
+
+/** Sous-sections du point 3, numérotées dans l'ordre de celles qui sont branchées (site.ts). */
+const SOUS_SECTIONS = [
+  ["rdv", RDV_EN_LIGNE],
+  ["telechargement", FORMULAIRE_ACTIF],
+  ["mesure", MESURE_ACTIVE],
+] as const;
+type SousSection = (typeof SOUS_SECTIONS)[number][0];
+const presentes = SOUS_SECTIONS.filter(([, active]) => active).map(([nom]) => nom);
+const numero = (nom: SousSection) => `3.${presentes.indexOf(nom) + 1}`;
+
+/** « a, b ou c » — ou « a » seul. */
+const enumerer = (elements: (string | false)[]) => {
+  const l = elements.filter((e): e is string => typeof e === "string");
+  return l.length <= 1 ? l.join("") : `${l.slice(0, -1).join(", ")} ou ${l[l.length - 1]}`;
+};
+
+const formulaires = [
+  RDV_EN_LIGNE && `la prise de rendez-vous (point ${numero("rdv")})`,
+  FORMULAIRE_ACTIF && `la demande de téléchargement (point ${numero("telechargement")})`,
+].filter((f): f is string => typeof f === "string");
+const phraseFormulaires =
+  formulaires.length === 0
+    ? "Il ne comporte aucun formulaire de collecte."
+    : formulaires.length === 1
+      ? `Son seul formulaire est ${formulaires[0]}.`
+      : `Ses seuls formulaires sont ${formulaires.join(" et ")}.`;
 
 const Confidentialite: React.FC = () => (
   <PageShell>
@@ -125,16 +152,17 @@ const Confidentialite: React.FC = () => (
         <h2>3. Données collectées par ce site</h2>
         <p>
           Le site {SITE.url} est un site vitrine statique : il ne dépose{" "}
-          <strong>aucun cookie de suivi</strong> et n'embarque aucun outil publicitaire.{" "}
-          {RDV_EN_LIGNE
-            ? "Son seul formulaire est la prise de rendez-vous décrite au point 3.1."
-            : "Il ne comporte aucun formulaire de collecte."}{" "}
-          Les journaux techniques standards de l'hébergeur (adresses IP, pages consultées) sont
-          conservés par celui-ci pour la sécurité et supprimés selon ses délais légaux.
+          <strong>aucun cookie de suivi</strong> et n'embarque aucun outil publicitaire
+          {MESURE_ACTIVE
+            ? ` ; sa fréquentation est mesurée sans cookie (point ${numero("mesure")}).`
+            : "."}{" "}
+          {phraseFormulaires} Les journaux techniques standards de l'hébergeur (adresses IP, pages
+          consultées) sont conservés par celui-ci pour la sécurité et supprimés selon ses délais
+          légaux.
         </p>
         {RDV_EN_LIGNE && (
           <>
-            <h3>3.1 Prise de rendez-vous pour une démonstration</h3>
+            <h3>{numero("rdv")} Prise de rendez-vous pour une démonstration</h3>
             <p>
               Le calendrier de réservation de la page de démonstration est fourni par{" "}
               <strong>Calendly</strong> (Calendly LLC, États-Unis) et n'est chargé que sur cette
@@ -157,15 +185,60 @@ const Confidentialite: React.FC = () => (
             </p>
           </>
         )}
+        {FORMULAIRE_ACTIF && (
+          <>
+            <h3>{numero("telechargement")} Demande de téléchargement de l'application</h3>
+            <p>
+              Avant de télécharger l'application, vous indiquez votre prénom, votre nom, votre
+              adresse e-mail professionnelle et, si vous le souhaitez, le nom de votre cabinet. Ces
+              données servent à vous remettre le lien de téléchargement (affiché aussitôt, et envoyé
+              par e-mail), à vous accompagner pendant votre essai, puis à vous informer des
+              évolutions de Noltan — dont la fin de la période d'essai gratuite et les conditions de
+              licence. Le premier usage relève des mesures précontractuelles prises à votre demande
+              (article 6.1.b du RGPD) ; l'information sur Noltan relève de l'intérêt légitime de
+              l'éditeur à présenter son outil aux professionnels concernés (article 6.1.f) : chaque
+              message comporte un lien de désinscription, et vous pouvez vous y opposer à tout
+              moment. Les données sont enregistrées, et les e-mails envoyés, par{" "}
+              <strong>Brevo</strong> (société française établie à Paris), qui les héberge dans
+              l'Union européenne et les traite pour le compte de l'éditeur. Sans suite de votre
+              part, elles sont supprimées au plus tard trois ans après le dernier échange. Elles ne
+              sont transmises à aucun autre tiers. Le lien de téléchargement s'affiche même si cet
+              enregistrement échoue.
+            </p>
+          </>
+        )}
+        {MESURE_ACTIVE && (
+          <>
+            <h3>{numero("mesure")} Mesure d'audience, sans cookie</h3>
+            <p>
+              Pour connaître la fréquentation du site (pages consultées, provenance, type d'appareil
+              et de système) et ce qui est utile aux visiteurs, le site utilise{" "}
+              <strong>Umami</strong> (Umami Software, Inc.), un outil de mesure d'audience{" "}
+              <strong>sans cookie</strong>, configuré pour héberger ses données dans l'Union
+              européenne : rien n'est déposé ni lu sur votre appareil, aucun identifiant n'est
+              conservé, et l'adresse IP n'est utilisée qu'au moment de la visite pour former une
+              statistique agrégée, sans être enregistrée. Les données, anonymes, ne sont croisées
+              avec aucun autre traitement et ne sont transmises à personne. Les gestes comptés sont
+              eux aussi anonymes : clic sur un bouton de téléchargement, de demande de démonstration
+              ou de contact, étapes de la prise de rendez-vous — jamais ce que vous saisissez. Ce
+              traitement repose sur l'intérêt légitime de l'éditeur à connaître l'audience de son
+              site (article 6.1.f du RGPD) ; il ne nécessite pas de bandeau de consentement.
+            </p>
+          </>
+        )}
 
         <h2>4. Licences et échanges avec l'éditeur</h2>
         <p>
-          Lorsqu'un utilisateur contacte l'éditeur (par e-mail
-          {RDV_EN_LIGNE && " ou en réservant une démonstration"}) ou souscrit une licence, l'éditeur
-          traite les seules données nécessaires à cette relation : nom, adresse e-mail, cabinet et
-          informations de facturation le cas échéant. Ces données ne sont jamais cédées à des tiers
-          et sont conservées pendant la durée de la relation commerciale, puis les durées légales
-          applicables.
+          Lorsqu'un utilisateur contacte l'éditeur (
+          {enumerer([
+            "par e-mail",
+            RDV_EN_LIGNE && "en réservant une démonstration",
+            FORMULAIRE_ACTIF && "en demandant à télécharger l'application",
+          ])}
+          ) ou souscrit une licence, l'éditeur traite les seules données nécessaires à cette
+          relation : nom, adresse e-mail, cabinet et informations de facturation le cas échéant. Ces
+          données ne sont jamais cédées à des tiers et sont conservées pendant la durée de la
+          relation commerciale, puis les durées légales applicables.
         </p>
 
         <h2>5. Vos droits</h2>

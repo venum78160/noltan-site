@@ -7,9 +7,11 @@ import {
   ShieldAlert,
 } from "lucide-react";
 import React from "react";
+import { FormulaireTelechargement } from "@/components/site/FormulaireTelechargement";
 import { PageShell } from "@/components/site/PageShell";
 import { ButtonLink } from "@/components/ui/button";
-import { SITE } from "@/lib/site";
+import { attributsMesure, systemeVisiteur } from "@/lib/mesure";
+import { FORMULAIRE_ACTIF, SITE } from "@/lib/site";
 import { lien } from "@/lib/utils";
 import { type InfosVersion, recupererVersion } from "@/lib/version";
 
@@ -47,6 +49,37 @@ type EtatVersion =
   | { statut: "chargement" }
   | { statut: "ok"; infos: InfosVersion }
   | { statut: "echec" };
+
+/**
+ * Le bouton de téléchargement réel — le même avec ou sans formulaire. Le clic
+ * est compté par la mesure d'audience avec le système du visiteur et la
+ * version (attributs inertes tant que la mesure n'est pas branchée).
+ */
+const BoutonTelechargement: React.FC<{ infos: InfosVersion }> = ({ infos }) => (
+  <>
+    <ButtonLink
+      href={infos.urlExe}
+      size="lg"
+      download
+      {...attributsMesure("telechargement", { systeme: systemeVisiteur(), version: infos.version })}
+    >
+      <Download size={17} strokeWidth={2.25} aria-hidden="true" />
+      {`Télécharger Noltan ${infos.version} pour Windows`}
+    </ButtonLink>
+    <p className="text-[13px] text-ink-500">Fichier .exe · {SITE.poidsInstalleur}</p>
+    {infos.notes && (
+      <p className="max-w-xl text-[13px] leading-relaxed text-ink-500">
+        Nouveautés de la version {infos.version} : {infos.notes}{" "}
+        <a
+          href={infos.urlRelease}
+          className="cursor-pointer font-medium text-gold-700 hover:underline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ink-900"
+        >
+          Détail de la release
+        </a>
+      </p>
+    )}
+  </>
+);
 
 const Telechargement: React.FC = () => {
   const [etat, setEtat] = React.useState<EtatVersion>({ statut: "chargement" });
@@ -90,26 +123,15 @@ const Telechargement: React.FC = () => {
               </>
             )}
 
-            {etat.statut === "ok" && (
-              <>
-                <ButtonLink href={etat.infos.urlExe} size="lg" download>
-                  <Download size={17} strokeWidth={2.25} aria-hidden="true" />
-                  {`Télécharger Noltan ${etat.infos.version} pour Windows`}
-                </ButtonLink>
-                <p className="text-[13px] text-ink-500">Fichier .exe · {SITE.poidsInstalleur}</p>
-                {etat.infos.notes && (
-                  <p className="max-w-xl text-[13px] leading-relaxed text-ink-500">
-                    Nouveautés de la version {etat.infos.version} : {etat.infos.notes}{" "}
-                    <a
-                      href={etat.infos.urlRelease}
-                      className="cursor-pointer font-medium text-gold-700 hover:underline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ink-900"
-                    >
-                      Détail de la release
-                    </a>
-                  </p>
-                )}
-              </>
-            )}
+            {etat.statut === "ok" &&
+              (FORMULAIRE_ACTIF ? (
+                <FormulaireTelechargement
+                  infos={etat.infos}
+                  bouton={<BoutonTelechargement infos={etat.infos} />}
+                />
+              ) : (
+                <BoutonTelechargement infos={etat.infos} />
+              ))}
 
             {etat.statut === "echec" && (
               <>
@@ -130,6 +152,7 @@ const Telechargement: React.FC = () => {
               <a
                 href={lien("/demo/")}
                 className="cursor-pointer font-medium text-gold-700 hover:underline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ink-900"
+                {...attributsMesure("demo_clic", { emplacement: "telechargement" })}
               >
                 Commencez par une démonstration
               </a>
@@ -220,6 +243,7 @@ const Telechargement: React.FC = () => {
             <a
               href={`mailto:${SITE.emailContact}`}
               className="cursor-pointer font-medium text-gold-700 hover:underline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ink-900"
+              {...attributsMesure("contact_email", { emplacement: "telechargement" })}
             >
               Écrivez-nous
             </a>

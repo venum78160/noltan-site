@@ -4,6 +4,7 @@ import { CalendrierRdv } from "@/components/site/CalendrierRdv";
 import { Capture } from "@/components/site/Capture";
 import { PageShell } from "@/components/site/PageShell";
 import { ButtonLink } from "@/components/ui/button";
+import { attributsMesure } from "@/lib/mesure";
 import { LIEN_DEMO, RDV_EN_LIGNE, SITE, URL_CALENDLY_INTEGREE } from "@/lib/site";
 import { lien } from "@/lib/utils";
 
@@ -49,7 +50,11 @@ const Demo: React.FC = () => (
           engagement et sans préparation de votre côté.
         </p>
         <div className="mt-8 flex flex-col items-center gap-3">
-          <ButtonLink href={LIEN_DEMO} size="lg">
+          <ButtonLink
+            href={LIEN_DEMO}
+            size="lg"
+            {...attributsMesure("demo_clic", { emplacement: "demo-haut" })}
+          >
             {SITE.libelleDemo}
           </ButtonLink>
           {SITE.dureeDemo && <p className="text-[13px] text-ink-500">Durée : {SITE.dureeDemo}</p>}
@@ -65,6 +70,7 @@ const Demo: React.FC = () => (
                 <a
                   href={`mailto:${SITE.emailContact}`}
                   className="cursor-pointer font-medium text-gold-700 hover:underline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ink-900"
+                  {...attributsMesure("contact_email", { emplacement: "demo" })}
                 >
                   {SITE.emailContact}
                 </a>
@@ -160,6 +166,7 @@ const Demo: React.FC = () => (
             <a
               href={`mailto:${SITE.emailContact}`}
               className="cursor-pointer font-medium text-gold-700 hover:underline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ink-900"
+              {...attributsMesure("contact_email", { emplacement: "demo-rdv" })}
             >
               {SITE.emailContact}
             </a>{" "}
